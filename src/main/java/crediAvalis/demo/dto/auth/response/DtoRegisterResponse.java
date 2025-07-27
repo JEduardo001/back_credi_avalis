@@ -1,4 +1,4 @@
-package crediAvalis.demo.dto.authDtos;
+package crediAvalis.demo.dto.auth.response;
 
 public class DtoRegisterResponse {
     private String message;

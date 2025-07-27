@@ -1,15 +1,18 @@
-package crediAvalis.demo.dto.authDtos;
+package crediAvalis.demo.dto.auth;
 
-public class DtoLoginResponse {
+public class DtoResponseWithData<T> {
+
     private String message;
     private int status;
-    private String token;
+    private T data;
 
+    public DtoResponseWithData() {
+    }
 
-    public DtoLoginResponse(String message,int status,String token){
+    public DtoResponseWithData(String message, int status, T data) {
         this.message = message;
         this.status = status;
-        this.token = token;
+        this.data = data;
     }
 
     public String getMessage() {
@@ -28,13 +31,12 @@ public class DtoLoginResponse {
         this.status = status;
     }
 
-    public String getToken() {
-        return token;
+    public T getData() {
+        return data;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setData(T data) {
+        this.data = data;
     }
-
-
 }
+

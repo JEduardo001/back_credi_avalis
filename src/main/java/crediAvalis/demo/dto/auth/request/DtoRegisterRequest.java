@@ -1,4 +1,4 @@
-package crediAvalis.demo.dto.authDtos;
+package crediAvalis.demo.dto.auth.request;
 
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;

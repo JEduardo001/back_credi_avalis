@@ -1,7 +1,6 @@
 package crediAvalis.demo.Exception;
 
-import crediAvalis.demo.dto.authDtos.DtoResponseWithError;
-import org.apache.coyote.Response;
+import crediAvalis.demo.dto.auth.response.DtoResponseWithError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,9 +8,17 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.NoSuchElementException;
+
 @ControllerAdvice
 public class GlobalException {
 
+    @ExceptionHandler(NotFoundRoleToAssignationException.class)
+    public ResponseEntity<DtoResponseWithError> notFoundRoleToAssignationException(NotFoundRoleToAssignationException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DtoResponseWithError(
+                "Error: " + ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()
+        ));
+    }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<DtoResponseWithError> missingServletRequestParameterException(MissingServletRequestParameterException ex){
@@ -19,6 +26,15 @@ public class GlobalException {
                 "Error. Make sure you provide the required data",HttpStatus.BAD_REQUEST.value()
         ));
     }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<DtoResponseWithError> noSuchElementException(NoSuchElementException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponseWithError(
+                ex.getMessage(),HttpStatus.BAD_REQUEST.value()
+        ));
+    }
+
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(MethodArgumentNotValidException ex){
