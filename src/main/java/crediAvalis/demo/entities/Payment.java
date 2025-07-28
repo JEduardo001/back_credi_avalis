@@ -14,15 +14,15 @@ public class Payment {
 
     @ManyToOne()
     @JoinColumn(name = "id_credit_obtained")
-    private CreditsObtained creditsObtained;
+    private CreditsObtained creditObtained;
 
     public Payment() {
     }
 
-    public Payment(Double amountPaid, LocalDate paymentDate, CreditsObtained creditsObtained) {
+    public Payment(Double amountPaid, LocalDate paymentDate, CreditsObtained creditObtained) {
         this.amountPaid = amountPaid;
         this.paymentDate = paymentDate;
-        this.creditsObtained = creditsObtained;
+        this.creditObtained = creditObtained;
     }
 
     public Integer getId() {
@@ -50,11 +50,11 @@ public class Payment {
     }
 
     public CreditsObtained getCreditsObtained() {
-        return creditsObtained;
+        return creditObtained;
     }
 
     public void setCreditsObtained(CreditsObtained creditsObtained) {
-        this.creditsObtained = creditsObtained;
+        this.creditObtained = creditsObtained;
     }
 
 

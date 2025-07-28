@@ -78,8 +78,5 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
                 "Fetched Data",HttpStatus.OK.value(),user
         ));
-
     }
-
-
 }

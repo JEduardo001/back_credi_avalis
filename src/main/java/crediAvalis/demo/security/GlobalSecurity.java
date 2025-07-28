@@ -39,7 +39,7 @@ public class GlobalSecurity {
                     config.setAllowCredentials(true);
                     config.setAllowedHeaders(List.of("Authorization","Content-Type"));
                     config.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
-                    config.setAllowedOrigins(List.of("http://localhost:8080"));
+                    config.setAllowedOrigins(List.of("http://localhost:8080", "http://127.0.0.1:5500"));
                     return config;
                 }));
         return http.build();

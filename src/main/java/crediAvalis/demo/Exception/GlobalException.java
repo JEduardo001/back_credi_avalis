@@ -3,6 +3,8 @@ package crediAvalis.demo.Exception;
 import crediAvalis.demo.dto.auth.response.DtoResponseWithError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -42,6 +44,25 @@ public class GlobalException {
                 new DtoResponseWithError("Error. Make sure you provide the required data",HttpStatus.BAD_REQUEST.value())
         );
     }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(UsernameNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new DtoResponseWithError("Error: The user with the username granted was not found",HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<DtoResponseWithError> badCredentialsException(BadCredentialsException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new DtoResponseWithError("Error: The user with the granted credentials was not found",HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+
+
+
 
 
     @ExceptionHandler(java.lang.Exception.class)
