@@ -1,5 +1,7 @@
 package crediAvalis.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -22,6 +24,9 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<CreditsObtained> creditsObtained = new HashSet<>();
 
     public Set<Role> getRoles() {
         return roles;
@@ -63,6 +68,11 @@ public class UserEntity {
         this.password = password;
     }
 
+    public Set<CreditsObtained> getCreditsObtained() {
+        return creditsObtained;
+    }
 
-
+    public void setCreditsObtained(Set<CreditsObtained> creditsObtained) {
+        this.creditsObtained = creditsObtained;
+    }
 }
