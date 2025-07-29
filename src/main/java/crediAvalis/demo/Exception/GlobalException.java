@@ -36,18 +36,24 @@ public class GlobalException {
         ));
     }
 
-
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(MethodArgumentNotValidException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error. Make sure you provide the required data",HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithError("Error. Make sure you provide the required data in correct format and correct specifications",HttpStatus.BAD_REQUEST.value())
         );
     }
 
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<DtoResponseWithError> userAlreadyExistsException(UserAlreadyExistsException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new DtoResponseWithError(ex.getMessage(), HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(UsernameNotFoundException ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new DtoResponseWithError("Error: The user with the username granted was not found",HttpStatus.BAD_REQUEST.value())
         );
     }
@@ -55,10 +61,18 @@ public class GlobalException {
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<DtoResponseWithError> badCredentialsException(BadCredentialsException ex){
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 new DtoResponseWithError("Error: The user with the granted credentials was not found",HttpStatus.BAD_REQUEST.value())
         );
     }
+
+    @ExceptionHandler(EmptyDataException.class)
+    public ResponseEntity<DtoResponseWithError> emptyDataException(EmptyDataException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new DtoResponseWithError("Error: The information cannot be empty",HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
 
     @ExceptionHandler(NotSamePasswordException.class)
     public ResponseEntity<DtoResponseWithError> badCredentialsException(NotSamePasswordException ex){
