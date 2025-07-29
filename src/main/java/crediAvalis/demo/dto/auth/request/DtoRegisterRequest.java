@@ -9,10 +9,14 @@ public class DtoRegisterRequest {
     @NotNull
     @Length(min = 8, max = 25)
     private String password;
+    @NotNull
+    @Length(min = 8, max = 25)
+    private String passwordRepeat;
 
-    public DtoRegisterRequest(String username, String password){
+    public DtoRegisterRequest(String username, String password,String passwordRepeat){
         this.username = username;
         this.password = password;
+        this.passwordRepeat = passwordRepeat;
     }
 
     public void setUsername(String username) {
@@ -29,5 +33,13 @@ public class DtoRegisterRequest {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getPasswordRepeat() {
+        return passwordRepeat;
+    }
+
+    public void setPasswordRepeat(String passwordRepeat) {
+        this.passwordRepeat = passwordRepeat;
     }
 }

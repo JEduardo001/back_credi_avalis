@@ -31,19 +31,15 @@ public class AuthController {
     @Autowired
     private UserService userService;
     @Autowired
-    private final PasswordEncoder passwordEncoder;
-    @Autowired
     private RoleRepository roleRepository;
 
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil,PasswordEncoder passwordEncoder) {
+    public AuthController(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        this.passwordEncoder = passwordEncoder;
-
     }
 
     @PostMapping("/login")
@@ -59,14 +55,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<DtoRegisterResponse> register(@Valid @RequestBody DtoRegisterRequest request) {
-        UserEntity user = new UserEntity();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        Role role = roleRepository.findByName("ROLE_USER")
-                        .orElseThrow(() -> new NotFoundRoleToAssignationException("Not found role to assignation to user"));
-        user.setRoles(Set.of(role));
-
-        userService.createUser(user);
+        UserEntity user = userService.createUser(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new DtoRegisterResponse(
                 "Registered User",HttpStatus.CREATED.value(),user.getId(),user.getUsername()
         ));

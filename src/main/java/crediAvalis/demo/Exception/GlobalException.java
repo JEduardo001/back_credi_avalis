@@ -60,10 +60,12 @@ public class GlobalException {
         );
     }
 
-
-
-
-
+    @ExceptionHandler(NotSamePasswordException.class)
+    public ResponseEntity<DtoResponseWithError> badCredentialsException(NotSamePasswordException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                new DtoResponseWithError("Error: The passwords do not match",HttpStatus.BAD_REQUEST.value())
+        );
+    }
 
     @ExceptionHandler(java.lang.Exception.class)
     public ResponseEntity<DtoResponseWithError> generalException(java.lang.Exception ex){
