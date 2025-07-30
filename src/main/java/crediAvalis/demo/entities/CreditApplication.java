@@ -17,7 +17,7 @@ public class CreditApplication {
     private Integer monthsToPay;
     private Double interestRate;
     @Enumerated(EnumType.STRING)
-    private CreditApplicationStatus status; // PENDING, APPROVED, REJECTED
+    private CreditApplicationStatus status; // PENDING, APPROVED, REJECTED, CANCELED
     private LocalDate createdAt;
     @ManyToOne()
     @JoinColumn(name = "id_user")

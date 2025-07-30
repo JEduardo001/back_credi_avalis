@@ -1,8 +1,8 @@
 package crediAvalis.demo.controller;
 
+import crediAvalis.demo.dto.auth.DtoResponseWithoutData;
 import crediAvalis.demo.dto.auth.DtoResponseWithData;
 import crediAvalis.demo.service.CreditService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +40,14 @@ public class CreditController {
     public ResponseEntity<DtoResponseWithData> createCreditApplication(@RequestParam Integer idCredit,@RequestParam Integer idUser){
         return ResponseEntity.status(HttpStatus.CREATED).body(new DtoResponseWithData(
                 "Created application credit",HttpStatus.CREATED.value(),creditService.createCreditApplication(idCredit,idUser)
+        ));
+    }
+
+    @PutMapping()
+    public ResponseEntity<DtoResponseWithoutData> cancelCreditApplication(@RequestParam Integer idCreditApplication){
+        creditService.cancelCreditApplication(idCreditApplication);
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithoutData(
+                "Canceled application credit",HttpStatus.OK.value()
         ));
     }
 

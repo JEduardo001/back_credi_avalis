@@ -1,6 +1,6 @@
 package crediAvalis.demo.Exception;
 
-import crediAvalis.demo.dto.auth.response.DtoResponseWithError;
+import crediAvalis.demo.dto.auth.DtoResponseWithoutData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,77 +16,84 @@ import java.util.NoSuchElementException;
 public class GlobalException {
 
     @ExceptionHandler(NotFoundRoleToAssignationException.class)
-    public ResponseEntity<DtoResponseWithError> notFoundRoleToAssignationException(NotFoundRoleToAssignationException ex){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DtoResponseWithError(
+    public ResponseEntity<DtoResponseWithoutData> notFoundRoleToAssignationException(NotFoundRoleToAssignationException ex){
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DtoResponseWithoutData(
                 "Error: " + ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR.value()
         ));
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseEntity<DtoResponseWithError> missingServletRequestParameterException(MissingServletRequestParameterException ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponseWithError(
+    public ResponseEntity<DtoResponseWithoutData> missingServletRequestParameterException(MissingServletRequestParameterException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponseWithoutData(
                 "Error. Make sure you provide the required data",HttpStatus.BAD_REQUEST.value()
         ));
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<DtoResponseWithError> noSuchElementException(NoSuchElementException ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponseWithError(
+    public ResponseEntity<DtoResponseWithoutData> noSuchElementException(NoSuchElementException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new DtoResponseWithoutData(
                 ex.getMessage(),HttpStatus.BAD_REQUEST.value()
         ));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(MethodArgumentNotValidException ex){
+    public ResponseEntity<DtoResponseWithoutData> methodArgumentNotValidException(MethodArgumentNotValidException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error. Make sure you provide the required data in correct format and correct specifications",HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithoutData("Error. Make sure you provide the required data in correct format and correct specifications",HttpStatus.BAD_REQUEST.value())
         );
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<DtoResponseWithError> userAlreadyExistsException(UserAlreadyExistsException ex){
+    public ResponseEntity<DtoResponseWithoutData> userAlreadyExistsException(UserAlreadyExistsException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError(ex.getMessage(), HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithoutData(ex.getMessage(), HttpStatus.BAD_REQUEST.value())
         );
     }
 
 
     @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<DtoResponseWithError> methodArgumentNotValidException(UsernameNotFoundException ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error: The user with the username granted was not found",HttpStatus.BAD_REQUEST.value())
+    public ResponseEntity<DtoResponseWithoutData> methodArgumentNotValidException(UsernameNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new DtoResponseWithoutData("Error: The user with the username granted was not found",HttpStatus.NOT_FOUND.value())
         );
     }
 
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<DtoResponseWithError> badCredentialsException(BadCredentialsException ex){
+    public ResponseEntity<DtoResponseWithoutData> badCredentialsException(BadCredentialsException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error: The user with the granted credentials was not found",HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithoutData("Error: The user with the granted credentials was not found",HttpStatus.BAD_REQUEST.value())
+        );
+    }
+
+    @ExceptionHandler(NotFoundCreditApplication.class)
+    public ResponseEntity<DtoResponseWithoutData> notFoundCreditApplication(NotFoundCreditApplication ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new DtoResponseWithoutData("Erro. Not found credit application",HttpStatus.NOT_FOUND.value())
         );
     }
 
     @ExceptionHandler(EmptyDataException.class)
-    public ResponseEntity<DtoResponseWithError> emptyDataException(EmptyDataException ex){
+    public ResponseEntity<DtoResponseWithoutData> emptyDataException(EmptyDataException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error: The information cannot be empty",HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithoutData("Error: The information cannot be empty",HttpStatus.BAD_REQUEST.value())
         );
     }
 
 
     @ExceptionHandler(NotSamePasswordException.class)
-    public ResponseEntity<DtoResponseWithError> badCredentialsException(NotSamePasswordException ex){
+    public ResponseEntity<DtoResponseWithoutData> badCredentialsException(NotSamePasswordException ex){
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                new DtoResponseWithError("Error: The passwords do not match",HttpStatus.BAD_REQUEST.value())
+                new DtoResponseWithoutData("Error: The passwords do not match",HttpStatus.BAD_REQUEST.value())
         );
     }
 
     @ExceptionHandler(java.lang.Exception.class)
-    public ResponseEntity<DtoResponseWithError> generalException(java.lang.Exception ex){
+    public ResponseEntity<DtoResponseWithoutData> generalException(java.lang.Exception ex){
         ex.getStackTrace();
         System.out.println("Error unknow: " + ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                new DtoResponseWithError("Error unknow",HttpStatus.INTERNAL_SERVER_ERROR.value())
+                new DtoResponseWithoutData("Error unknow",HttpStatus.INTERNAL_SERVER_ERROR.value())
         );
     }
 

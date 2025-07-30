@@ -45,7 +45,7 @@ public class CreditService {
 
     public CreditApplication getSpecificCredit(Integer idApplicationCredit){
         CreditApplication credit =  creditApplicationRepository.findById(idApplicationCredit)
-                .orElseThrow(() -> new NotFoundCreditApplication("Not found credit application"));
+                .orElseThrow(() -> new NotFoundCreditApplication());
         return credit;
     }
 
@@ -77,7 +77,7 @@ public class CreditService {
 
     public CreditApplication approveCreditApplication(Integer idCreditApplication, Integer idUser){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
-                .orElseThrow(() -> new NotFoundCreditApplication("Not found credit application to aprove credit"));
+                .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.APPROVED);
 
         CreditApplication credit = creditApplicationRepository.save(creditApplication);
@@ -103,7 +103,7 @@ public class CreditService {
 
     public CreditApplication rejectCreditApplication(Integer idCreditApplication){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
-                .orElseThrow(() -> new NotFoundCreditApplication("Not found credit application to reject credit"));
+                .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.REJECTED);
 
         return creditApplicationRepository.save(creditApplication);
@@ -112,6 +112,14 @@ public class CreditService {
 
     public List<CreditEntity> getCredits(){
        return creditRepository.findAll();
+    }
+
+    public void cancelCreditApplication(Integer idCreditApplication){
+        CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
+                .orElseThrow(() -> new NotFoundCreditApplication());
+        creditApplication.setStatus(CreditApplicationStatus.CANCELED);
+        creditApplicationRepository.save(creditApplication);
+
     }
 
 

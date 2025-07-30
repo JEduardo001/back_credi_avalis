@@ -1,12 +1,12 @@
-package crediAvalis.demo.dto.auth.response;
+package crediAvalis.demo.dto.auth;
 
-public class DtoResponseWithError {
+public class DtoResponseWithoutData {
     private String message;
-    private int stauts;
+    private int status;
 
-    public DtoResponseWithError(String message,int status){
+    public DtoResponseWithoutData(String message, int status){
         this.message = message;
-        this.stauts = status;
+        this.status = status;
     }
 
     public String getMessage() {
@@ -18,11 +18,11 @@ public class DtoResponseWithError {
     }
 
     public int getStauts() {
-        return stauts;
+        return status;
     }
 
     public void setStauts(int stauts) {
-        this.stauts = stauts;
+        this.status = stauts;
     }
 
 }
