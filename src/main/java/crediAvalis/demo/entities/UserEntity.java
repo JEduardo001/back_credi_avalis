@@ -12,7 +12,7 @@ import java.util.Set;
 @Entity
 public class UserEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private String username;
@@ -35,7 +35,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<CreditsObtained> creditsObtained = new HashSet<>();
-
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private Set<CreditApplication> listCreditsApplication = new HashSet<>();
     public Set<Role> getRoles() {
         return roles;
     }
@@ -130,6 +132,14 @@ public class UserEntity {
 
     public LocalDate getRegistredDate() {
         return registredDate;
+    }
+
+    public Set<CreditApplication> getListCreditsApplication() {
+        return listCreditsApplication;
+    }
+
+    public void setListCreditsApplication(Set<CreditApplication> listCreditsApplication) {
+        this.listCreditsApplication = listCreditsApplication;
     }
 }
 

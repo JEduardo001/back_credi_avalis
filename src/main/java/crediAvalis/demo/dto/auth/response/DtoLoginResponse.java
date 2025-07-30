@@ -4,12 +4,13 @@ public class DtoLoginResponse {
     private String message;
     private int status;
     private String token;
+    private int idUser;
 
-
-    public DtoLoginResponse(String message,int status,String token){
+    public DtoLoginResponse(String message,int status,String token,int idUser){
         this.message = message;
         this.status = status;
         this.token = token;
+        this.idUser = idUser;
     }
 
     public String getMessage() {
@@ -18,6 +19,14 @@ public class DtoLoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdUser() {
+        return idUser;
     }
 
     public int getStatus() {

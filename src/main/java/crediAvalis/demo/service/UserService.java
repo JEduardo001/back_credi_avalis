@@ -68,10 +68,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
-
-
     public UserInterfaceProjection getDataUser(Integer idUser){
         UserInterfaceProjection user = userRepository.findProjectedById(idUser)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        return user;
+    }
+
+    public UserInterfaceProjection getDataUserByUsername(String username){
+        UserInterfaceProjection user = userRepository.findProjectedByUsername(username)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         return user;

@@ -1,4 +1,5 @@
 package crediAvalis.demo.entities;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -6,7 +7,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Payment {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private Double amountPaid;
@@ -14,6 +15,7 @@ public class Payment {
 
     @ManyToOne()
     @JoinColumn(name = "id_credit_obtained")
+    @JsonBackReference
     private CreditsObtained creditObtained;
 
     public Payment() {

@@ -8,8 +8,9 @@ import java.util.List;
 @Entity
 public class CreditEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private Double amountRequested;
     private Integer monthsToPay;
     private Double interestRate;
@@ -25,6 +26,14 @@ public class CreditEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Double getAmountRequested() {

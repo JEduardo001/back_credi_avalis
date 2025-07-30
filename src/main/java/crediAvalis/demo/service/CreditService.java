@@ -55,6 +55,7 @@ public class CreditService {
 
         CreditApplication creditApplicationCreated = creditApplicationRepository.save(new CreditApplication(
                 credit.getAmountRequested(),
+                credit.getName(),
                 credit.getMonthsToPay(),
                 credit.getInterestRate(),
                 CreditApplicationStatus.PENDING,
@@ -85,6 +86,7 @@ public class CreditService {
 
         CreditsObtained creditsObtained = new CreditsObtained(
                 credit.getAmountRequested(),
+                credit.getName(),
                 credit.getMonthsToPay(),
                 credit.getInterestRate(),
                 LocalDate.now(),
@@ -107,6 +109,11 @@ public class CreditService {
         return creditApplicationRepository.save(creditApplication);
 
     }
+
+    public List<CreditEntity> getCredits(){
+       return creditRepository.findAll();
+    }
+
 
 
 

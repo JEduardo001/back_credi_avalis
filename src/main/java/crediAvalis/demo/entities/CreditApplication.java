@@ -10,15 +10,18 @@ import java.time.LocalDateTime;
 @Entity
 public class CreditApplication {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private Double amountRequested;
     private Integer monthsToPay;
     private Double interestRate;
     @Enumerated(EnumType.STRING)
     private CreditApplicationStatus status; // PENDING, APPROVED, REJECTED
     private LocalDate createdAt;
-    @ManyToOne
+    @ManyToOne()
+    @JoinColumn(name = "id_user")
+    @JsonBackReference
     private UserEntity user;
     @ManyToOne
     @JsonManagedReference
@@ -29,8 +32,9 @@ public class CreditApplication {
     public CreditApplication() {
     }
 
-    public CreditApplication(Double amountRequested, Integer monthsToPay, Double interestRate, CreditApplicationStatus status, LocalDate createdAt, UserEntity user, CreditEntity credit) {
+    public CreditApplication(Double amountRequested,String name, Integer monthsToPay, Double interestRate, CreditApplicationStatus status, LocalDate createdAt, UserEntity user, CreditEntity credit) {
         this.amountRequested = amountRequested;
+        this.name =name;
         this.monthsToPay = monthsToPay;
         this.interestRate = interestRate;
         this.status = status;
@@ -41,6 +45,14 @@ public class CreditApplication {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setId(Integer id) {

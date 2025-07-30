@@ -10,9 +10,10 @@ import java.util.List;
 @Entity
 public class CreditsObtained {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double amountPaid;
+    private String name;
     private Integer monthsToPay;
     private Double interestRate;
     private LocalDate aprovedDate;
@@ -28,8 +29,9 @@ public class CreditsObtained {
 
     public CreditsObtained(){}
 
-    public CreditsObtained(Double amountPaid, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
+    public CreditsObtained(Double amountPaid,String name, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
         this.amountPaid = amountPaid;
+        this.name = name;
         this.monthsToPay = monthsToPay;
         this.interestRate = interestRate;
         this.aprovedDate = applicationDate;
@@ -41,6 +43,14 @@ public class CreditsObtained {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setId(Integer id) {

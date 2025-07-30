@@ -47,9 +47,11 @@ public class AuthController {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
+        UserInterfaceProjection user = userService.getDataUserByUsername(username);
+
         String token = jwtUtil.generateToken(username);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoLoginResponse(
-                "Logged in user",HttpStatus.OK.value(),token
+                "Logged in user",HttpStatus.OK.value(),token,user.getId()
         ));
     }
 

@@ -15,10 +15,17 @@ public class CreditController {
     @Autowired
     private CreditService creditService;
 
-    @GetMapping
+    @GetMapping("/getAllCreditsApplication")
     public ResponseEntity<DtoResponseWithData> getCreditsApplication(){
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
                 "Get credits application",HttpStatus.OK.value(),creditService.getCreditsApplication()
+        ));
+    }
+
+    @GetMapping("/getAllCredits")
+    public ResponseEntity<DtoResponseWithData> getCredits(){
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Credits obtained",HttpStatus.OK.value(),creditService.getCredits()
         ));
     }
 
