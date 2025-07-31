@@ -21,7 +21,7 @@ public class CreditApplication {
     private LocalDate createdAt;
     @ManyToOne()
     @JoinColumn(name = "id_user")
-    @JsonBackReference
+
     private UserEntity user;
     @ManyToOne
     @JsonManagedReference

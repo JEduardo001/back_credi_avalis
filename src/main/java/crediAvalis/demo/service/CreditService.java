@@ -3,11 +3,13 @@ package crediAvalis.demo.service;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import crediAvalis.demo.Exception.NotFoundCreditApplication;
 import crediAvalis.demo.dto.credit.CreateCreditApplicationDto;
+import crediAvalis.demo.dto.credit.DtoCreditApplicationResponse;
 import crediAvalis.demo.entities.CreditApplication;
 import crediAvalis.demo.entities.CreditEntity;
 import crediAvalis.demo.entities.CreditsObtained;
 import crediAvalis.demo.entities.UserEntity;
 import crediAvalis.demo.enums.CreditApplicationStatus;
+import crediAvalis.demo.projection.interfaceProjection.CreditApplicationInterfaceProjection;
 import crediAvalis.demo.repository.CreditApplicationRepository;
 import crediAvalis.demo.repository.CreditRepository;
 import crediAvalis.demo.repository.CreditsObtainedRepository;
@@ -38,9 +40,9 @@ public class CreditService {
     private CreditApplicationRepository creditApplicationRepository;
 
 
-    public Page<CreditApplication> getCreditsApplication(){
-        Pageable pageable = PageRequest.of(0, 20);
-        return creditApplicationRepository.findAll(pageable);
+    public Page<CreditApplicationInterfaceProjection> getCreditsApplication(){
+        Pageable pageable = PageRequest.of(0, 35);
+        return creditApplicationRepository.findAllProjectedBy(pageable);
     }
 
     public CreditApplication getSpecificCredit(Integer idApplicationCredit){
@@ -49,7 +51,7 @@ public class CreditService {
         return credit;
     }
 
-    public CreditApplication createCreditApplication(Integer idCredit, Integer idUser){
+    public DtoCreditApplicationResponse createCreditApplication(Integer idCredit, Integer idUser){
         CreditEntity credit = creditRepository.findById(idCredit).orElseThrow(() -> new NoSuchElementException("Not found credit"));
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("Not user found"));
 
@@ -66,10 +68,10 @@ public class CreditService {
 
         credit.setCreditApplication(creditApplicationCreated);
 
-       return creditApplicationCreated;
+       return new DtoCreditApplicationResponse(creditApplicationCreated.getId());
     }
 
-    public Page<CreditApplication> getCreditsApplicationPending(){
+    public Page<CreditApplicationInterfaceProjection> getCreditsApplicationPending(){
         Pageable page = PageRequest.of(0,20);
         return creditApplicationRepository.findAllByStatus(CreditApplicationStatus.PENDING,page);
 
@@ -119,10 +121,5 @@ public class CreditService {
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.CANCELED);
         creditApplicationRepository.save(creditApplication);
-
     }
-
-
-
-
 }

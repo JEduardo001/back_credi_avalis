@@ -14,7 +14,7 @@ public interface UserInterfaceProjection {
     String getEmail();
     List<Role> getRoles();
     Set<CreditsObtained> getCreditsObtained();
-    Set<CreditApplication> getListCreditsApplication();
+    Set<CreditsApplicationProjection> getListCreditsApplication();
 
 
 }

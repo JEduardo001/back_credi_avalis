@@ -18,9 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 
@@ -47,11 +49,16 @@ public class AuthController {
         Authentication auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
+
+
+        Collection<? extends GrantedAuthority> roles = auth.getAuthorities();
+        boolean isAdmin = roles.stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN"));
+
         UserInterfaceProjection user = userService.getDataUserByUsername(username);
 
         String token = jwtUtil.generateToken(username);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoLoginResponse(
-                "Logged in user",HttpStatus.OK.value(),token,user.getId()
+                "Logged in user",HttpStatus.OK.value(),token,user.getId(),isAdmin
         ));
     }
 

@@ -18,8 +18,6 @@ public class CreditEntity {
     @JsonBackReference
     private List<CreditApplication> creditApplication;
 
-
-
     public Integer getId() {
         return id;
     }

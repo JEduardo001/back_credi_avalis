@@ -16,9 +16,9 @@ public class CreditController {
     private CreditService creditService;
 
     @GetMapping("/getAllCreditsApplication")
-    public ResponseEntity<DtoResponseWithData> getCreditsApplication(){
+    public ResponseEntity<DtoResponseWithData> getAllCreditsApplication() {
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Get credits application",HttpStatus.OK.value(),creditService.getCreditsApplication()
+                "Get credits application", HttpStatus.OK.value(), creditService.getCreditsApplication()
         ));
     }
 

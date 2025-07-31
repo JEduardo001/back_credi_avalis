@@ -29,8 +29,8 @@ public class GlobalSecurity {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers("/auth/login", "/auth/register").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .anyRequest().hasAnyRole("USER")
+                        .requestMatchers("/admin/**").hasAnyRole("ADMIN","USER")
+                        .anyRequest().hasAnyRole("USER","ADMIN")
                 )
                         .addFilterBefore(jwtAuthFilter,UsernamePasswordAuthenticationFilter.class)
 

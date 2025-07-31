@@ -5,12 +5,14 @@ public class DtoLoginResponse {
     private int status;
     private String token;
     private int idUser;
+    private boolean isAdmin;
 
-    public DtoLoginResponse(String message,int status,String token,int idUser){
+    public DtoLoginResponse(String message,int status,String token,int idUser,boolean isAdmin){
         this.message = message;
         this.status = status;
         this.token = token;
         this.idUser = idUser;
+        this.isAdmin = isAdmin;
     }
 
     public String getMessage() {
@@ -45,5 +47,12 @@ public class DtoLoginResponse {
         this.token = token;
     }
 
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
 
+    public boolean getIsAdmin(){
+        return this.isAdmin;
+    }
 }
+
