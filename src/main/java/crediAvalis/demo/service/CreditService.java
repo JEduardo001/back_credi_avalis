@@ -2,7 +2,6 @@ package crediAvalis.demo.service;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import crediAvalis.demo.Exception.NotFoundCreditApplication;
-import crediAvalis.demo.dto.credit.CreateCreditApplicationDto;
 import crediAvalis.demo.dto.credit.DtoCreditApplicationResponse;
 import crediAvalis.demo.entities.CreditApplication;
 import crediAvalis.demo.entities.CreditEntity;
@@ -77,7 +76,7 @@ public class CreditService {
 
     }
 
-    public CreditApplication approveCreditApplication(Integer idCreditApplication, Integer idUser){
+    public void approveCreditApplication(Integer idCreditApplication, Integer idUser){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.APPROVED);
@@ -98,18 +97,13 @@ public class CreditService {
         );
 
         creditsObtainedRepository.save(creditsObtained);
-
-        return credit;
-
     }
 
-    public CreditApplication rejectCreditApplication(Integer idCreditApplication){
+    public void rejectCreditApplication(Integer idCreditApplication){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.REJECTED);
-
-        return creditApplicationRepository.save(creditApplication);
-
+        creditApplicationRepository.save(creditApplication);
     }
 
     public List<CreditEntity> getCredits(){

@@ -1,6 +1,7 @@
 package crediAvalis.demo.controller;
 
 import crediAvalis.demo.dto.auth.DtoResponseWithData;
+import crediAvalis.demo.dto.auth.DtoResponseWithoutData;
 import crediAvalis.demo.service.CreditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,16 +23,18 @@ public class AdminCreditController {
     }
 
     @PutMapping("/approve")
-    public ResponseEntity<DtoResponseWithData> approveCreditApplication(@RequestParam Integer idCreditApplication, @RequestParam Integer idUser){
-        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Credit Approved",HttpStatus.OK.value(),creditService.approveCreditApplication(idCreditApplication,idUser)
+    public ResponseEntity<DtoResponseWithoutData> approveCreditApplication(@RequestParam Integer idCreditApplication, @RequestParam Integer idUser){
+        creditService.approveCreditApplication(idCreditApplication,idUser);
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithoutData(
+                "Credit Approved",HttpStatus.OK.value()
         ));
     }
 
     @PutMapping("/reject")
-    public ResponseEntity<DtoResponseWithData> rejectCreditApplication(@RequestParam Integer idCreditApplication){
-        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Credit Approved",HttpStatus.OK.value(),creditService.rejectCreditApplication(idCreditApplication)
+    public ResponseEntity<DtoResponseWithoutData> rejectCreditApplication(@RequestParam Integer idCreditApplication){
+        creditService.rejectCreditApplication(idCreditApplication);
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithoutData(
+                "Credit Approved",HttpStatus.OK.value()
         ));
     }
 
