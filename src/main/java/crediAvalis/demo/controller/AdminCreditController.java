@@ -3,6 +3,7 @@ package crediAvalis.demo.controller;
 import crediAvalis.demo.dto.auth.DtoResponseWithData;
 import crediAvalis.demo.dto.auth.DtoResponseWithoutData;
 import crediAvalis.demo.service.CreditService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,14 @@ public class AdminCreditController {
 
     @Autowired
     private CreditService creditService;
+
+
+    @GetMapping("/filterData")
+    public ResponseEntity<DtoResponseWithData> getDataFilter(@RequestParam String typeFilter){
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Filtered data",HttpStatus.OK.value(),creditService.getCreditsApplicationByFilter(typeFilter)
+        ));
+    }
 
     @GetMapping("/pending")
     public ResponseEntity<DtoResponseWithData> getCreditApplicationsPending(){

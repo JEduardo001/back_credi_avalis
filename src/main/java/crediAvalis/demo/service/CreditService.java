@@ -39,6 +39,11 @@ public class CreditService {
     private CreditApplicationRepository creditApplicationRepository;
 
 
+    public Page<CreditApplicationInterfaceProjection> getCreditsApplicationByFilter(String filter){
+        Pageable pageable = PageRequest.of(0, 35);
+        return creditApplicationRepository.findAllProjectedByFilter(CreditApplicationStatus.valueOf(filter),pageable);
+    }
+
     public Page<CreditApplicationInterfaceProjection> getCreditsApplication(){
         Pageable pageable = PageRequest.of(0, 35);
         return creditApplicationRepository.findAllProjectedBy(pageable);
