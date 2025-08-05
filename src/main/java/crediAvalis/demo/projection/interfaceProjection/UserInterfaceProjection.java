@@ -15,6 +15,4 @@ public interface UserInterfaceProjection {
     List<Role> getRoles();
     Set<CreditsObtained> getCreditsObtained();
     Set<CreditsApplicationProjection> getListCreditsApplication();
-
-
 }

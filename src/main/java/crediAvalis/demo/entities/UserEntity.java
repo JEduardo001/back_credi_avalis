@@ -38,6 +38,7 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<CreditApplication> listCreditsApplication = new HashSet<>();
+
     public Set<Role> getRoles() {
         return roles;
     }

@@ -8,6 +8,7 @@ import crediAvalis.demo.dto.auth.request.DtoRegisterRequest;
 import crediAvalis.demo.dto.auth.response.DtoRegisterResponse;
 import crediAvalis.demo.entities.Role;
 import crediAvalis.demo.entities.UserEntity;
+import crediAvalis.demo.projection.interfaceProjection.UserDataProjectionToCreditApplication;
 import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
 import crediAvalis.demo.repository.RoleRepository;
 import crediAvalis.demo.repository.UserRepository;
@@ -68,8 +69,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserInterfaceProjection getDataUser(Integer idUser){
-        UserInterfaceProjection user = userRepository.findProjectedById(idUser)
+    public UserDataProjectionToCreditApplication getDataUser(Integer idUser){
+        UserDataProjectionToCreditApplication user = userRepository.findProjectedById(idUser)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         return user;

@@ -21,5 +21,7 @@ public interface CreditsApplicationProjection {
     CreditApplicationStatus getStatus();
     LocalDate getCreatedAt();
    CreditProjection getCredit();
+    UserDataProjectionToCreditApplication getUser();
+
 }
 

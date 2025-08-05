@@ -7,6 +7,7 @@ import crediAvalis.demo.dto.auth.request.DtoRegisterRequest;
 import crediAvalis.demo.dto.auth.response.DtoRegisterResponse;
 import crediAvalis.demo.entities.Role;
 import crediAvalis.demo.entities.UserEntity;
+import crediAvalis.demo.projection.interfaceProjection.UserDataProjectionToCreditApplication;
 import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
 import crediAvalis.demo.repository.RoleRepository;
 import crediAvalis.demo.security.JwtUtil;
@@ -72,7 +73,7 @@ public class AuthController {
 
     @GetMapping("/authData")
     public ResponseEntity<DtoResponseWithData> getUserData(@RequestParam Integer idUser){
-        UserInterfaceProjection user = userService.getDataUser(idUser);
+        UserDataProjectionToCreditApplication user = userService.getDataUser(idUser);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
                 "Fetched Data",HttpStatus.OK.value(),user
         ));

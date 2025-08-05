@@ -15,17 +15,31 @@ public class CreditController {
     @Autowired
     private CreditService creditService;
 
+    @GetMapping("/getUserCreditsApplicationFiltered")
+    public ResponseEntity<DtoResponseWithData> getUserCreditsApplicationFiltered(@RequestParam Integer idUser, @RequestParam String filter) {
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Obtained filtered user credits application", HttpStatus.OK.value(), creditService.getUserCreditsApplicationFiltered(idUser,filter)
+        ));
+    }
+
+    @GetMapping("/getCreditsApplicationFiltered")
+    public ResponseEntity<DtoResponseWithData> getCreditsApplicationFiltered(@RequestParam String filter) {
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Obtained filtered credits application", HttpStatus.OK.value(), creditService.getCreditsApplicationByFilter(filter)
+        ));
+    }
+
     @GetMapping("/getAllCreditsApplication")
     public ResponseEntity<DtoResponseWithData> getAllCreditsApplication() {
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Get credits application", HttpStatus.OK.value(), creditService.getCreditsApplication()
+                "Obtained credits application", HttpStatus.OK.value(), creditService.getCreditsApplication()
         ));
     }
 
     @GetMapping("/getAllCredits")
     public ResponseEntity<DtoResponseWithData> getCredits(){
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Credits obtained",HttpStatus.OK.value(),creditService.getCredits()
+                "Obtained credits",HttpStatus.OK.value(),creditService.getCredits()
         ));
     }
 

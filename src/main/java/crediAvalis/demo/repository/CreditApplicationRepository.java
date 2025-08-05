@@ -13,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 public interface CreditApplicationRepository extends JpaRepository<CreditApplication,Integer> {
     Page<CreditApplicationInterfaceProjection> findAllProjectedBy(Pageable page);
     Page<CreditApplicationInterfaceProjection> findAllByStatus(CreditApplicationStatus status, Pageable page);
+
     @Query("SELECT c FROM CreditApplication c WHERE c.status = :filter")
     Page<CreditApplicationInterfaceProjection> findAllProjectedByFilter(@Param("filter") CreditApplicationStatus filter, Pageable page);
+
 
 }
