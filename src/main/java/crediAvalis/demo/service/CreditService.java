@@ -23,12 +23,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Page;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,9 +42,8 @@ public class CreditService {
     private CreditApplicationRepository creditApplicationRepository;
 
 
-    public Page<CreditApplicationInterfaceProjection> getCreditsApplicationByFilter(String filter){
-        Pageable pageable = PageRequest.of(0, 35);
-        return creditApplicationRepository.findAllProjectedByFilter(CreditApplicationStatus.valueOf(filter),pageable);
+    public List<CreditApplicationInterfaceProjection> getCreditsApplicationByFilter(String filter){
+        return creditApplicationRepository.findAllProjectedByFilter(CreditApplicationStatus.valueOf(filter));
     }
 
     public Set<DtoCreditApplicationFilterResponse> getUserCreditsApplicationFiltered(Integer idUser, String filter){
@@ -68,8 +65,8 @@ public class CreditService {
         return filteredCredits;
     }
 
-    public Page<CreditApplicationInterfaceProjection> getCreditsApplication(){
-        Pageable pageable = PageRequest.of(0, 35);
+    public Page<CreditApplicationInterfaceProjection> getCreditsApplication(@RequestParam Integer pageNumber){
+        Pageable pageable = PageRequest.of(pageNumber, 3);
         return creditApplicationRepository.findAllProjectedBy(pageable);
     }
 
@@ -95,7 +92,8 @@ public class CreditService {
         ));
 
         credit.setCreditApplication(creditApplicationCreated);
-
+        //update total credits application
+        user.setCreditsApplication(user.getCreditsApplication() + 1);
        return new DtoCreditApplicationResponse(creditApplicationCreated.getId());
     }
 
@@ -105,6 +103,14 @@ public class CreditService {
 
     }
 
+    public Long getTotalCreditsApplication(){
+        return creditApplicationRepository.count();
+    }
+
+    public Long getTotalCredits(){
+        return creditRepository.count();
+    }
+
     public void approveCreditApplication(Integer idCreditApplication, Integer idUser){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
@@ -112,7 +118,7 @@ public class CreditService {
 
         CreditApplication credit = creditApplicationRepository.save(creditApplication);
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("User not found"));
-
+        System.out.println("usuairoo" + idUser);
 
         CreditsObtained creditsObtained = new CreditsObtained(
                 credit.getAmountRequested(),
@@ -124,6 +130,9 @@ public class CreditService {
                 user
 
         );
+        //update total credits application
+        user.setCreditsApplication(user.getCreditApproved() + 1);
+        user.setCreditsObtained(creditsObtained);
 
         creditsObtainedRepository.save(creditsObtained);
     }
@@ -135,14 +144,18 @@ public class CreditService {
         creditApplicationRepository.save(creditApplication);
     }
 
-    public List<CreditEntity> getCredits(){
-       return creditRepository.findAll();
+    public Page<CreditEntity> getCredits(Integer pageNumber){
+        Pageable page = PageRequest.of(pageNumber,3);
+       return creditRepository.findAllBy(page);
     }
 
-    public void cancelCreditApplication(Integer idCreditApplication){
+    public void cancelCreditApplication(Integer idCreditApplication,Integer idUser){
         CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.CANCELED);
         creditApplicationRepository.save(creditApplication);
+        //update total credits application
+        UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("User not found"));
+        user.setCreditsApplication(user.getCreditsApplication() - 1);
     }
 }

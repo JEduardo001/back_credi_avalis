@@ -69,12 +69,20 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public UserDataProjectionToCreditApplication getDataUser(Integer idUser){
-        UserDataProjectionToCreditApplication user = userRepository.findProjectedById(idUser)
+    public UserInterfaceProjection getDataUser(Integer idUser){
+        UserInterfaceProjection user = userRepository.findProjectedById(idUser)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
 
         return user;
     }
+
+
+    public UserDataProjectionToCreditApplication getDataUserAllData(Integer idUser){
+        UserDataProjectionToCreditApplication user = userRepository.findToShowAllData(idUser)
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        return user;
+    }
+
 
     public UserInterfaceProjection getDataUserByUsername(String username){
         UserInterfaceProjection user = userRepository.findProjectedByUsername(username)

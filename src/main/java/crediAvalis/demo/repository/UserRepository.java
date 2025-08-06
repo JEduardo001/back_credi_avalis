@@ -18,7 +18,9 @@ public interface UserRepository extends JpaRepository<UserEntity,Integer> {
     Optional<UserEntity> findByUsername(String username);
     Optional<UserEntity> findByEmail(String email);
     Optional<UserEntity> findById(Integer id);
-    Optional<UserDataProjectionToCreditApplication>  findProjectedById(Integer id);
-    Optional<UserInterfaceProjection>  findProjectedByUsername(String id);
+    Optional<UserInterfaceProjection> findProjectedById(Integer id);
+    Optional<UserInterfaceProjection> findProjectedByUsername(String username);
+    @Query("SELECT u FROM UserEntity u WHERE u.id = :id")
+    Optional<UserDataProjectionToCreditApplication> findToShowAllData(@Param("id") Integer id);
 
 }

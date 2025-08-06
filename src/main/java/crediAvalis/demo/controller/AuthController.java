@@ -73,7 +73,15 @@ public class AuthController {
 
     @GetMapping("/authData")
     public ResponseEntity<DtoResponseWithData> getUserData(@RequestParam Integer idUser){
-        UserDataProjectionToCreditApplication user = userService.getDataUser(idUser);
+        UserInterfaceProjection user = userService.getDataUser(idUser);
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Fetched Data",HttpStatus.OK.value(),user
+        ));
+    }
+
+    @GetMapping("/getDataUserAllData")
+    public ResponseEntity<DtoResponseWithData> getDataUserAllData(@RequestParam Integer idUser){
+        UserDataProjectionToCreditApplication user = userService.getDataUserAllData(idUser);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
                 "Fetched Data",HttpStatus.OK.value(),user
         ));

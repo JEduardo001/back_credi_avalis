@@ -11,5 +11,4 @@ public interface UserDataProjectionToCreditApplication {
     Integer getCreditsApplication();
     Integer getCreditApproved();
     LocalDate getRegistredDate();
-
 }

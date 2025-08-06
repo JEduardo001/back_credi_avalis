@@ -30,16 +30,30 @@ public class CreditController {
     }
 
     @GetMapping("/getAllCreditsApplication")
-    public ResponseEntity<DtoResponseWithData> getAllCreditsApplication() {
+    public ResponseEntity<DtoResponseWithData> getAllCreditsApplication(@RequestParam Integer pageNumber) {
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Obtained credits application", HttpStatus.OK.value(), creditService.getCreditsApplication()
+                "Obtained credits application", HttpStatus.OK.value(), creditService.getCreditsApplication(pageNumber)
+        ));
+    }
+
+    @GetMapping("/totalCredits")
+    public ResponseEntity<DtoResponseWithData> getTotalCredits() {
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Obtained credits application", HttpStatus.OK.value(), creditService.getTotalCredits()
+        ));
+    }
+
+    @GetMapping("/getTotalCreditsApplication")
+    public ResponseEntity<DtoResponseWithData> getTotalCreditsApplication() {
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Obtained total credits application", HttpStatus.OK.value(), creditService.getTotalCreditsApplication()
         ));
     }
 
     @GetMapping("/getAllCredits")
-    public ResponseEntity<DtoResponseWithData> getCredits(){
+    public ResponseEntity<DtoResponseWithData> getCredits(@RequestParam Integer pageNumber){
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
-                "Obtained credits",HttpStatus.OK.value(),creditService.getCredits()
+                "Obtained credits",HttpStatus.OK.value(),creditService.getCredits(pageNumber)
         ));
     }
 
@@ -58,8 +72,8 @@ public class CreditController {
     }
 
     @PutMapping()
-    public ResponseEntity<DtoResponseWithoutData> cancelCreditApplication(@RequestParam Integer idCreditApplication){
-        creditService.cancelCreditApplication(idCreditApplication);
+    public ResponseEntity<DtoResponseWithoutData> cancelCreditApplication(@RequestParam Integer idCreditApplication, @RequestParam Integer idUser){
+        creditService.cancelCreditApplication(idCreditApplication,idUser);
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithoutData(
                 "Canceled application credit",HttpStatus.OK.value()
         ));

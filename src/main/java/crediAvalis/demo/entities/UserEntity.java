@@ -7,6 +7,7 @@ import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -34,7 +35,7 @@ public class UserEntity {
     private Set<Role> roles = new HashSet<>();
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<CreditsObtained> creditsObtained = new HashSet<>();
+    private List<CreditsObtained> creditsObtained;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
     private Set<CreditApplication> listCreditsApplication = new HashSet<>();
@@ -79,12 +80,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public Set<CreditsObtained> getCreditsObtained() {
+    public List<CreditsObtained> getCreditsObtained() {
         return creditsObtained;
     }
 
-    public void setCreditsObtained(Set<CreditsObtained> creditsObtained) {
-        this.creditsObtained = creditsObtained;
+    public void setCreditsObtained(CreditsObtained creditsObtained) {
+        this.creditsObtained.add(creditsObtained);
     }
 
     public String getFullName() {
