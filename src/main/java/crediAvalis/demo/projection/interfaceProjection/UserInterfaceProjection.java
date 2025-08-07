@@ -13,6 +13,6 @@ public interface UserInterfaceProjection {
     String getUsername();
     String getEmail();
     List<Role> getRoles();
-    Set<CreditsObtained> getCreditsObtained();
+    Set<CreditObtainedProjection> getCreditsObtained();
     Set<CreditsApplicationProjection> getListCreditsApplication();
 }

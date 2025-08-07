@@ -21,7 +21,7 @@ public class PaymentController {
         ));
     }
 
-    @PostMapping
+    @PostMapping("/pay")
     public ResponseEntity<DtoResponseWithData> pay(@RequestParam Integer idCreditObtained){
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
                 "Payment made",HttpStatus.OK.value(),paymentService.pay(idCreditObtained)

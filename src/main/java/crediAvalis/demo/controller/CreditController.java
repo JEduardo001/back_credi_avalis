@@ -15,6 +15,13 @@ public class CreditController {
     @Autowired
     private CreditService creditService;
 
+    @GetMapping("/getDataCreditObtained")
+    public ResponseEntity<DtoResponseWithData> getDataCreditObtained(@RequestParam Integer idCreditObtained) {
+        return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(
+                "Obtained data credits obtained", HttpStatus.OK.value(), creditService.getDataCreditObtained(idCreditObtained)
+        ));
+    }
+
     @GetMapping("/getUserCreditsApplicationFiltered")
     public ResponseEntity<DtoResponseWithData> getUserCreditsApplicationFiltered(@RequestParam Integer idUser, @RequestParam String filter) {
         return ResponseEntity.status(HttpStatus.OK).body(new DtoResponseWithData(

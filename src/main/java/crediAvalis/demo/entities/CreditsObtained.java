@@ -13,6 +13,8 @@ public class CreditsObtained {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Double amountPaid;
+    private Double amountToPay;
+    private boolean creditFinishedPaying;
     private String name;
     private Integer monthsToPay;
     private Double interestRate;
@@ -25,12 +27,15 @@ public class CreditsObtained {
     @JsonBackReference
     private UserEntity user;
     @OneToMany(mappedBy = "creditObtained")
+    @JsonManagedReference
     private List<Payment> payments;
 
     public CreditsObtained(){}
 
-    public CreditsObtained(Double amountPaid,String name, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
+    public CreditsObtained(Double amountPaid,Double amountToPay,Boolean creditFinishedPaying, String name, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
         this.amountPaid = amountPaid;
+        this.amountToPay = amountToPay;
+        this.creditFinishedPaying = creditFinishedPaying;
         this.name = name;
         this.monthsToPay = monthsToPay;
         this.interestRate = interestRate;
@@ -38,7 +43,6 @@ public class CreditsObtained {
         this.credit = credit;
         this.user = user;
     }
-
 
 
     public Integer getId() {
@@ -111,5 +115,25 @@ public class CreditsObtained {
 
     public List<Payment> getPayments() {
         return payments;
+    }
+
+    public Double getAmountToPay() {
+        return amountToPay;
+    }
+
+    public void setAmountToPay(Double amountToPay) {
+        this.amountToPay = amountToPay;
+    }
+
+    public void setPayments(List<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public void setCreditFinishedPaying(boolean creditFinishedPaying) {
+        this.creditFinishedPaying = creditFinishedPaying;
+    }
+
+    public boolean getCreditFinishedPaying(){
+        return creditFinishedPaying;
     }
 }

@@ -15,6 +15,13 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class GlobalException {
 
+
+    @ExceptionHandler(NotFoundCreditObtainedException.class)
+    public ResponseEntity<DtoResponseWithoutData> notFoundCreditObtainedException(NotFoundCreditObtainedException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DtoResponseWithoutData(
+                "Error: The credit obtained was not found",HttpStatus.NOT_FOUND.value()
+        ));
+    }
     @ExceptionHandler(NotFoundRoleToAssignationException.class)
     public ResponseEntity<DtoResponseWithoutData> notFoundRoleToAssignationException(NotFoundRoleToAssignationException ex){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new DtoResponseWithoutData(

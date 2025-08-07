@@ -2,6 +2,7 @@ package crediAvalis.demo.service;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import crediAvalis.demo.Exception.NotFoundCreditApplication;
+import crediAvalis.demo.Exception.NotFoundCreditObtainedException;
 import crediAvalis.demo.dto.credit.DtoCreditApplicationFilterResponse;
 import crediAvalis.demo.dto.credit.DtoCreditApplicationResponse;
 import crediAvalis.demo.entities.CreditApplication;
@@ -10,6 +11,7 @@ import crediAvalis.demo.entities.CreditsObtained;
 import crediAvalis.demo.entities.UserEntity;
 import crediAvalis.demo.enums.CreditApplicationStatus;
 import crediAvalis.demo.projection.interfaceProjection.CreditApplicationInterfaceProjection;
+import crediAvalis.demo.projection.interfaceProjection.CreditObtainedProjection;
 import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
 import crediAvalis.demo.repository.CreditApplicationRepository;
 import crediAvalis.demo.repository.CreditRepository;
@@ -41,6 +43,11 @@ public class CreditService {
     @Autowired
     private CreditApplicationRepository creditApplicationRepository;
 
+
+
+    public CreditObtainedProjection getDataCreditObtained(Integer idCreditObtained){
+        return creditsObtainedRepository.findProjectionById(idCreditObtained);
+    }
 
     public List<CreditApplicationInterfaceProjection> getCreditsApplicationByFilter(String filter){
         return creditApplicationRepository.findAllProjectedByFilter(CreditApplicationStatus.valueOf(filter));
@@ -118,17 +125,19 @@ public class CreditService {
 
         CreditApplication credit = creditApplicationRepository.save(creditApplication);
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("User not found"));
-        System.out.println("usuairoo" + idUser);
-
+        double rate = credit.getAmountRequested() / 100 * credit.getInterestRate();
+        double totalPayment = credit.getAmountRequested() + rate;
+        System.out.println("total creditoooo " + totalPayment);
         CreditsObtained creditsObtained = new CreditsObtained(
-                credit.getAmountRequested(),
+                0.0,
+                totalPayment,
+                false,
                 credit.getName(),
                 credit.getMonthsToPay(),
                 credit.getInterestRate(),
                 LocalDate.now(),
                 credit.getCredit(),
                 user
-
         );
         //update total credits application
         user.setCreditsApplication(user.getCreditApproved() + 1);
