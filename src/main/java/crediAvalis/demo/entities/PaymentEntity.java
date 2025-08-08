@@ -3,10 +3,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import crediAvalis.demo.enums.PaymentCreditObtainedStatus;
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
-public class Payment {
+public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -18,12 +17,12 @@ public class Payment {
     @ManyToOne()
     @JoinColumn(name = "id_credit_obtained")
     @JsonBackReference
-    private CreditsObtained creditObtained;
+    private CreditsObtainedEntity creditObtained;
 
-    public Payment() {
+    public PaymentEntity() {
     }
 
-    public Payment(Double amountPaid, LocalDate paymentDate,PaymentCreditObtainedStatus status, CreditsObtained creditObtained) {
+    public PaymentEntity(Double amountPaid, LocalDate paymentDate, PaymentCreditObtainedStatus status, CreditsObtainedEntity creditObtained) {
         this.amountPaid = amountPaid;
         this.paymentDate = paymentDate;
         this.status = status;
@@ -54,12 +53,12 @@ public class Payment {
         this.paymentDate = paymentDate;
     }
 
-    public CreditsObtained getCreditsObtained() {
+    public CreditsObtainedEntity getCreditsObtained() {
         return creditObtained;
     }
 
-    public void setCreditsObtained(CreditsObtained creditsObtained) {
-        this.creditObtained = creditsObtained;
+    public void setCreditsObtained(CreditsObtainedEntity creditsObtainedEntity) {
+        this.creditObtained = creditsObtainedEntity;
     }
 
     public PaymentCreditObtainedStatus getStatus() {
@@ -70,11 +69,11 @@ public class Payment {
         this.status = status;
     }
 
-    public void setCreditObtained(CreditsObtained creditObtained) {
+    public void setCreditObtained(CreditsObtainedEntity creditObtained) {
         this.creditObtained = creditObtained;
     }
 
-    public CreditsObtained getCreditObtained() {
+    public CreditsObtainedEntity getCreditObtained() {
         return creditObtained;
     }
 }

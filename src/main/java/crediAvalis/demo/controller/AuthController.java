@@ -1,11 +1,9 @@
 package crediAvalis.demo.controller;
 
-import crediAvalis.demo.Exception.NotFoundRoleToAssignationException;
 import crediAvalis.demo.dto.auth.DtoResponseWithData;
 import crediAvalis.demo.dto.auth.response.DtoLoginResponse;
 import crediAvalis.demo.dto.auth.request.DtoRegisterRequest;
 import crediAvalis.demo.dto.auth.response.DtoRegisterResponse;
-import crediAvalis.demo.entities.Role;
 import crediAvalis.demo.entities.UserEntity;
 import crediAvalis.demo.projection.interfaceProjection.UserDataProjectionToCreditApplication;
 import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
@@ -20,12 +18,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")

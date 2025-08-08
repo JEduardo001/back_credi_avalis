@@ -1,8 +1,5 @@
 package crediAvalis.demo.projection.interfaceProjection;
 
-import crediAvalis.demo.entities.Payment;
-import crediAvalis.demo.enums.CreditApplicationStatus;
-
 import java.time.LocalDate;
 import java.util.List;
 

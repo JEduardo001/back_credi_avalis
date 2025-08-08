@@ -1,14 +1,13 @@
 package crediAvalis.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import crediAvalis.demo.enums.CreditApplicationStatus;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 @Entity
-public class CreditApplication {
+public class CreditApplicationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -29,10 +28,10 @@ public class CreditApplication {
     private CreditEntity credit;
 
 
-    public CreditApplication() {
+    public CreditApplicationEntity() {
     }
 
-    public CreditApplication(Double amountRequested,String name, Integer monthsToPay, Double interestRate, CreditApplicationStatus status, LocalDate createdAt, UserEntity user, CreditEntity credit) {
+    public CreditApplicationEntity(Double amountRequested, String name, Integer monthsToPay, Double interestRate, CreditApplicationStatus status, LocalDate createdAt, UserEntity user, CreditEntity credit) {
         this.amountRequested = amountRequested;
         this.name =name;
         this.monthsToPay = monthsToPay;

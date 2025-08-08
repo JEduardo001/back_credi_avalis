@@ -1,15 +1,11 @@
 package crediAvalis.demo.service;
 
 import crediAvalis.demo.dto.payment.DtoPayment;
-import crediAvalis.demo.entities.CreditsObtained;
-import crediAvalis.demo.entities.Payment;
+import crediAvalis.demo.entities.CreditsObtainedEntity;
+import crediAvalis.demo.entities.PaymentEntity;
 import crediAvalis.demo.enums.PaymentCreditObtainedStatus;
-import crediAvalis.demo.projection.interfaceProjection.PaymentProjection;
 import crediAvalis.demo.repository.CreditsObtainedRepository;
 import crediAvalis.demo.repository.PaymentRepository;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,37 +21,37 @@ public class PaymentService {
     @Autowired
     private CreditsObtainedRepository creditsObtainedRepository;
 
-    public List<Payment> getPayments(Integer idCreditObtained){
-        CreditsObtained creditsObtained = creditsObtainedRepository.findById(idCreditObtained).
+    public List<PaymentEntity> getPayments(Integer idCreditObtained){
+        CreditsObtainedEntity creditsObtainedEntity = creditsObtainedRepository.findById(idCreditObtained).
                 orElseThrow(() -> new NoSuchElementException("Not credit obtained found"));
-        return creditsObtained.getPayments();
+        return creditsObtainedEntity.getPayments();
     }
 
     public DtoPayment pay(Integer idCreditObtained){
-        CreditsObtained creditsObtained = creditsObtainedRepository.findById(idCreditObtained).
+        CreditsObtainedEntity creditsObtainedEntity = creditsObtainedRepository.findById(idCreditObtained).
                 orElseThrow(() -> new NoSuchElementException("Not credit obtained found"));
         //total amount to pay
-        Double amountToPay = creditsObtained.getAmountToPay();
+        Double amountToPay = creditsObtainedEntity.getAmountToPay();
         //amount paid
-        Double amountPaid = creditsObtained.getAmountPaid();
+        Double amountPaid = creditsObtainedEntity.getAmountPaid();
         Double newAmountPaid = amountPaid + amountToPay / 2;
-        creditsObtained.setAmountPaid(newAmountPaid);
+        creditsObtainedEntity.setAmountPaid(newAmountPaid);
 
         if(newAmountPaid.equals(amountToPay)){
-            creditsObtained.setCreditFinishedPaying(true);
+            creditsObtainedEntity.setCreditFinishedPaying(true);
         }
-        Payment pay = new Payment(
+        PaymentEntity pay = new PaymentEntity(
                 amountToPay / 2,
                 LocalDate.now(),
                 PaymentCreditObtainedStatus.PAID,
-                creditsObtained
+                creditsObtainedEntity
         );
         paymentRepository.save(pay);
-        creditsObtained.setPayment(pay);
+        creditsObtainedEntity.setPayment(pay);
 
         DtoPayment dtoPayment = new DtoPayment(
                 pay.getId(),
-                creditsObtained.getCreditFinishedPaying(),
+                creditsObtainedEntity.getCreditFinishedPaying(),
                 pay.getAmountPaid(),
                 pay.getPaymentDate(),
                 pay.getStatus()

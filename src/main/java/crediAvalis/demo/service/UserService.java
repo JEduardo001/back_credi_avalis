@@ -1,12 +1,11 @@
 package crediAvalis.demo.service;
 
-import crediAvalis.demo.Exception.EmptyDataException;
-import crediAvalis.demo.Exception.NotFoundRoleToAssignationException;
-import crediAvalis.demo.Exception.NotSamePasswordException;
-import crediAvalis.demo.Exception.UserAlreadyExistsException;
+import crediAvalis.demo.exception.customException.EmptyDataException;
+import crediAvalis.demo.exception.customException.NotFoundRoleToAssignationException;
+import crediAvalis.demo.exception.customException.NotSamePasswordException;
+import crediAvalis.demo.exception.customException.UserAlreadyExistsException;
 import crediAvalis.demo.dto.auth.request.DtoRegisterRequest;
-import crediAvalis.demo.dto.auth.response.DtoRegisterResponse;
-import crediAvalis.demo.entities.Role;
+import crediAvalis.demo.entities.RoleEntity;
 import crediAvalis.demo.entities.UserEntity;
 import crediAvalis.demo.projection.interfaceProjection.UserDataProjectionToCreditApplication;
 import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
@@ -18,7 +17,6 @@ import org.springframework.stereotype.*;
 
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -62,9 +60,9 @@ public class UserService {
         user.setCreditsApplication(0);
         user.setRegistredDate(LocalDate.now());
 
-        Role role = roleRepository.findByName("ROLE_USER")
+        RoleEntity roleEntity = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new NotFoundRoleToAssignationException("Not found role to assignation to user"));
-        user.setRoles(Set.of(role));
+        user.setRoles(Set.of(roleEntity));
 
         return userRepository.save(user);
     }

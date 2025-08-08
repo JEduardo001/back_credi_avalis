@@ -1,9 +1,7 @@
 package crediAvalis.demo.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -32,20 +30,20 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<RoleEntity> roleEntities = new HashSet<>();
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private List<CreditsObtained> creditsObtained;
+    private List<CreditsObtainedEntity> creditsObtainedEntity;
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
-    private Set<CreditApplication> listCreditsApplication = new HashSet<>();
+    private Set<CreditApplicationEntity> listCreditsApplication = new HashSet<>();
 
-    public Set<Role> getRoles() {
-        return roles;
+    public Set<RoleEntity> getRoles() {
+        return roleEntities;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRoles(Set<RoleEntity> roleEntities) {
+        this.roleEntities = roleEntities;
     }
 
     public Integer getId() {
@@ -80,12 +78,12 @@ public class UserEntity {
         this.password = password;
     }
 
-    public List<CreditsObtained> getCreditsObtained() {
-        return creditsObtained;
+    public List<CreditsObtainedEntity> getCreditsObtained() {
+        return creditsObtainedEntity;
     }
 
-    public void setCreditsObtained(CreditsObtained creditsObtained) {
-        this.creditsObtained.add(creditsObtained);
+    public void setCreditsObtained(CreditsObtainedEntity creditsObtainedEntity) {
+        this.creditsObtainedEntity.add(creditsObtainedEntity);
     }
 
     public String getFullName() {
@@ -136,11 +134,11 @@ public class UserEntity {
         return registredDate;
     }
 
-    public Set<CreditApplication> getListCreditsApplication() {
+    public Set<CreditApplicationEntity> getListCreditsApplication() {
         return listCreditsApplication;
     }
 
-    public void setListCreditsApplication(Set<CreditApplication> listCreditsApplication) {
+    public void setListCreditsApplication(Set<CreditApplicationEntity> listCreditsApplication) {
         this.listCreditsApplication = listCreditsApplication;
     }
 }

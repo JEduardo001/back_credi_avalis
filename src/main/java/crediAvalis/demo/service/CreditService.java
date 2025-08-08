@@ -1,24 +1,19 @@
 package crediAvalis.demo.service;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import crediAvalis.demo.Exception.NotFoundCreditApplication;
-import crediAvalis.demo.Exception.NotFoundCreditObtainedException;
+import crediAvalis.demo.exception.customException.NotFoundCreditApplication;
 import crediAvalis.demo.dto.credit.DtoCreditApplicationFilterResponse;
 import crediAvalis.demo.dto.credit.DtoCreditApplicationResponse;
-import crediAvalis.demo.entities.CreditApplication;
+import crediAvalis.demo.entities.CreditApplicationEntity;
 import crediAvalis.demo.entities.CreditEntity;
-import crediAvalis.demo.entities.CreditsObtained;
+import crediAvalis.demo.entities.CreditsObtainedEntity;
 import crediAvalis.demo.entities.UserEntity;
 import crediAvalis.demo.enums.CreditApplicationStatus;
 import crediAvalis.demo.projection.interfaceProjection.CreditApplicationInterfaceProjection;
 import crediAvalis.demo.projection.interfaceProjection.CreditObtainedProjection;
-import crediAvalis.demo.projection.interfaceProjection.UserInterfaceProjection;
 import crediAvalis.demo.repository.CreditApplicationRepository;
 import crediAvalis.demo.repository.CreditRepository;
 import crediAvalis.demo.repository.CreditsObtainedRepository;
 import crediAvalis.demo.repository.UserRepository;
-import jakarta.persistence.*;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.PageRequest;
@@ -55,7 +50,7 @@ public class CreditService {
 
     public Set<DtoCreditApplicationFilterResponse> getUserCreditsApplicationFiltered(Integer idUser, String filter){
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("User not found"));
-        Set<CreditApplication> creditsApplication = user.getListCreditsApplication();
+        Set<CreditApplicationEntity> creditsApplication = user.getListCreditsApplication();
         Set<DtoCreditApplicationFilterResponse> filteredCredits = creditsApplication.stream().filter(credit -> credit.getStatus().equals(CreditApplicationStatus.valueOf(filter)))
                 .map(credit -> new DtoCreditApplicationFilterResponse(
                         credit.getId(),
@@ -77,8 +72,8 @@ public class CreditService {
         return creditApplicationRepository.findAllProjectedBy(pageable);
     }
 
-    public CreditApplication getSpecificCredit(Integer idApplicationCredit){
-        CreditApplication credit =  creditApplicationRepository.findById(idApplicationCredit)
+    public CreditApplicationEntity getSpecificCredit(Integer idApplicationCredit){
+        CreditApplicationEntity credit =  creditApplicationRepository.findById(idApplicationCredit)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         return credit;
     }
@@ -87,7 +82,7 @@ public class CreditService {
         CreditEntity credit = creditRepository.findById(idCredit).orElseThrow(() -> new NoSuchElementException("Not found credit"));
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("Not user found"));
 
-        CreditApplication creditApplicationCreated = creditApplicationRepository.save(new CreditApplication(
+        CreditApplicationEntity creditApplicationCreated = creditApplicationRepository.save(new CreditApplicationEntity(
                 credit.getAmountRequested(),
                 credit.getName(),
                 credit.getMonthsToPay(),
@@ -119,16 +114,16 @@ public class CreditService {
     }
 
     public void approveCreditApplication(Integer idCreditApplication, Integer idUser){
-        CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
+        CreditApplicationEntity creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.APPROVED);
 
-        CreditApplication credit = creditApplicationRepository.save(creditApplication);
+        CreditApplicationEntity credit = creditApplicationRepository.save(creditApplication);
         UserEntity user = userRepository.findById(idUser).orElseThrow(() -> new NoSuchElementException("User not found"));
         double rate = credit.getAmountRequested() / 100 * credit.getInterestRate();
         double totalPayment = credit.getAmountRequested() + rate;
         System.out.println("total creditoooo " + totalPayment);
-        CreditsObtained creditsObtained = new CreditsObtained(
+        CreditsObtainedEntity creditsObtainedEntity = new CreditsObtainedEntity(
                 0.0,
                 totalPayment,
                 false,
@@ -141,13 +136,13 @@ public class CreditService {
         );
         //update total credits application
         user.setCreditsApplication(user.getCreditApproved() + 1);
-        user.setCreditsObtained(creditsObtained);
+        user.setCreditsObtained(creditsObtainedEntity);
 
-        creditsObtainedRepository.save(creditsObtained);
+        creditsObtainedRepository.save(creditsObtainedEntity);
     }
 
     public void rejectCreditApplication(Integer idCreditApplication){
-        CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
+        CreditApplicationEntity creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.REJECTED);
         creditApplicationRepository.save(creditApplication);
@@ -159,7 +154,7 @@ public class CreditService {
     }
 
     public void cancelCreditApplication(Integer idCreditApplication,Integer idUser){
-        CreditApplication creditApplication = creditApplicationRepository.findById(idCreditApplication)
+        CreditApplicationEntity creditApplication = creditApplicationRepository.findById(idCreditApplication)
                 .orElseThrow(() -> new NotFoundCreditApplication());
         creditApplication.setStatus(CreditApplicationStatus.CANCELED);
         creditApplicationRepository.save(creditApplication);

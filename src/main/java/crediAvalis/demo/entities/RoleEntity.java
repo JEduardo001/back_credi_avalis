@@ -3,7 +3,7 @@ package crediAvalis.demo.entities;
 import jakarta.persistence.*;
 
 @Entity
-public class Role {
+public class RoleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

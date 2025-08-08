@@ -1,8 +1,6 @@
 package crediAvalis.demo.projection.interfaceProjection;
 
-import crediAvalis.demo.entities.CreditApplication;
-import crediAvalis.demo.entities.CreditsObtained;
-import crediAvalis.demo.entities.Role;
+import crediAvalis.demo.entities.RoleEntity;
 
 import java.util.List;
 import java.util.Set;
@@ -12,7 +10,7 @@ public interface UserInterfaceProjection {
     Integer getId();
     String getUsername();
     String getEmail();
-    List<Role> getRoles();
+    List<RoleEntity> getRoles();
     Set<CreditObtainedProjection> getCreditsObtained();
-    Set<CreditsApplicationProjection> getListCreditsApplication();
+    Set<CreditApplicationInterfaceProjection> getListCreditsApplication();
 }

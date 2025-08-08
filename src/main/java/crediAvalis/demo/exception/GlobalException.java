@@ -1,5 +1,6 @@
-package crediAvalis.demo.Exception;
+package crediAvalis.demo.exception;
 
+import crediAvalis.demo.exception.customException.*;
 import crediAvalis.demo.dto.auth.DtoResponseWithoutData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

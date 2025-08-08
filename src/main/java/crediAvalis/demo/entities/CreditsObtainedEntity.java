@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-public class CreditsObtained {
+public class CreditsObtainedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -28,11 +28,11 @@ public class CreditsObtained {
     private UserEntity user;
     @OneToMany(mappedBy = "creditObtained")
     @JsonManagedReference
-    private List<Payment> payments;
+    private List<PaymentEntity> paymentEntities;
 
-    public CreditsObtained(){}
+    public CreditsObtainedEntity(){}
 
-    public CreditsObtained(Double amountPaid,Double amountToPay,Boolean creditFinishedPaying, String name, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
+    public CreditsObtainedEntity(Double amountPaid, Double amountToPay, Boolean creditFinishedPaying, String name, Integer monthsToPay, Double interestRate, LocalDate applicationDate, CreditEntity credit, UserEntity user) {
         this.amountPaid = amountPaid;
         this.amountToPay = amountToPay;
         this.creditFinishedPaying = creditFinishedPaying;
@@ -109,12 +109,12 @@ public class CreditsObtained {
         return user;
     }
 
-    public void setPayment(Payment payments) {
-        this.payments.add(payments);
+    public void setPayment(PaymentEntity payments) {
+        this.paymentEntities.add(payments);
     }
 
-    public List<Payment> getPayments() {
-        return payments;
+    public List<PaymentEntity> getPayments() {
+        return paymentEntities;
     }
 
     public Double getAmountToPay() {
@@ -125,8 +125,8 @@ public class CreditsObtained {
         this.amountToPay = amountToPay;
     }
 
-    public void setPayments(List<Payment> payments) {
-        this.payments = payments;
+    public void setPayments(List<PaymentEntity> paymentEntities) {
+        this.paymentEntities = paymentEntities;
     }
 
     public void setCreditFinishedPaying(boolean creditFinishedPaying) {

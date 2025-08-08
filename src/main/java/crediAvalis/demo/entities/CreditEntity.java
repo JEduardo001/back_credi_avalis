@@ -16,7 +16,7 @@ public class CreditEntity {
     private Double interestRate;
     @OneToMany(mappedBy = "credit")
     @JsonBackReference
-    private List<CreditApplication> creditApplication;
+    private List<CreditApplicationEntity> creditApplication;
 
     public Integer getId() {
         return id;
@@ -58,11 +58,11 @@ public class CreditEntity {
         this.interestRate = interestRate;
     }
 
-    public void setCreditApplication(CreditApplication creditApplication) {
+    public void setCreditApplication(CreditApplicationEntity creditApplication) {
         this.creditApplication.add(creditApplication);
     }
 
-    public List<CreditApplication> getCreditApplication() {
+    public List<CreditApplicationEntity> getCreditApplication() {
         return creditApplication;
     }
 }
